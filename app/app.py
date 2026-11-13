@@ -17,5 +17,7 @@ def metrics():
 def hello_world():
     return "Hello world!"
 
+echo "# prueba del workflow" >> app/app.py
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000)
