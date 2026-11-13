@@ -1,0 +1,29 @@
+services:
+  app:
+    build: ./app
+    container_name: app
+    ports:
+      - "8000:8000"
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml # Bind mount: Lee directamente el archivo de la maquina anfitriona
+    depends_on:
+      - app
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana # Volumen con nombre: para que grafana escriba en el volumen lo que esta a la derecha
+    depends_on:
+      - prometheus
+
+volumes:
+  grafana-data:
